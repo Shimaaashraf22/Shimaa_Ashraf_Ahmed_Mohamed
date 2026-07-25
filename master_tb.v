@@ -14,6 +14,8 @@ wire m_data_ready_o;
 wire sda;
 wire sca;
 reg tb_ack;
+pullup(sda);
+pullup(sca);
 
 
  assign sda = (tb_ack) ? 1'b0 : 1'bz;

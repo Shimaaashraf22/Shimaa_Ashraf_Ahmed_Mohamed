@@ -23,8 +23,9 @@ ack1=3'd3,
 data=3'd4,
 ack2=3'd5,
 stop=3'd6;
-wire sda_oe= (state !=ack1 && state !=ack2);
-assign sda = sda_oe ? (sda_out ? 1'bz : 1'b0) : 1'bz;
+
+assign sda = (sda_out==1'b0) ? 1'b0:1'bz;
+
 
 assign sca = (sca_out==1'b0) ? 1'b0:1'bz;
 
@@ -157,7 +158,7 @@ if(m_error_o || m_ack_i)
 state<=stop;
 else begin
 bit_counter<=3'd7;
-shift_reg<=m_data_o;
+shift_reg<=m_data_i;
 state<=data;
 end
 end
@@ -236,7 +237,7 @@ if(m_error_o || m_stop_i || (~m_w_r_i && sda==1'b1))
 state<=stop;
 else begin
 bit_counter<=3'd7;
-shift_reg<=m_data_o;
+shift_reg<=m_data_i;
 state<=data;
 end
 end
